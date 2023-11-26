@@ -3,6 +3,8 @@
 
 
 #Use  Set-MpPreference  to set settings for defender, need to set each one indivdually but should work well for what we need
+
+#get the status of anitmalware software on the computer:
 Get-MpComputerStatus
 
 
