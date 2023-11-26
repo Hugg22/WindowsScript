@@ -23,16 +23,16 @@ New-NetFirewallRule -DisplayName "Block Port 6379" -Direction Outbound -LocalPor
 New-NetFirewallRule -DisplayName "Block Port 27017,27018" -Direction Outbound -LocalPort 27017,27018 -Protocol TCP -Action Block
 
 #Finds files created by user and puts them into a file located in the Users c drive
-Get-ChildItem -Path C:\users\*.txt -Recurse -Force -Depth 2 > c:\Users\txtOutPut
-Get-ChildItem -Path C:\users\*.png  -Recurse -Force -Depth 2 > c:\Users\pngOutPut
-Get-ChildItem -Path C:\users\*.jpeg  -Recurse -Force -Depth 2 > c:\Users\jpegOutPut
-Get-ChildItem -Path C:\users\*.doc  -Recurse -Force -Depth 2 > c:\Users\docOutPut
-Get-ChildItem -Path C:\users\*.mp3  -Recurse -Force -Depth 2 > c:\Users\mp3OutPut
-Get-ChildItem -Path C:\users\*.sql  -Recurse -Force -Depth 2 > c:\Users\sqlOutPut
-Get-ChildItem -Path C:\users\*.exe  -Recurse -Force -Depth 2 > c:\Users\exeOutPut
-Get-ChildItem -Path C:\users\*.mp4  -Recurse -Force -Depth 2 > c:\Users\mp4OutPut
-Get-ChildItem -Path C:\users\*.docx  -Recurse -Force -Depth 2 > c:\Users\docxOutPut
-Get-ChildItem -Path C:\users\*.pdf  -Recurse -Force -Depth 2 > c:\Users\pdfOutPut
+Get-ChildItem -Path C:\users\*.txt -Recurse -Force -Depth 2 > c:\Users\txtOutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.png  -Recurse -Force -Depth 2 > c:\Users\pngOutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.jpeg  -Recurse -Force -Depth 2 > c:\Users\jpegOutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.doc  -Recurse -Force -Depth 2 > c:\Users\docOutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.mp3  -Recurse -Force -Depth 2 > c:\Users\mp3OutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.sql  -Recurse -Force -Depth 2 > c:\Users\sqlOutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.exe  -Recurse -Force -Depth 2 > c:\Users\exeOutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.mp4  -Recurse -Force -Depth 2 > c:\Users\mp4OutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.docx  -Recurse -Force -Depth 2 > c:\Users\docxOutPut -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\users\*.pdf  -Recurse -Force -Depth 2 > c:\Users\pdfOutPut -ErrorAction SilentlyContinue
 
 #Shows active users on local computer
 Get-LocalUser | Where-Object -Property enabled
