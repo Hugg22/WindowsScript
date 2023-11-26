@@ -37,4 +37,38 @@ Get-ChildItem -Path C:\users\*.pdf  -Recurse -Force -Depth 2 > c:\Users\pdfOutPu
 #Shows active users on local computer
 Get-LocalUser | Where-Object -Property enabled
 
-#Need to put a conditonal to create users and then a conditional to remove users. 
+#need to create microsoft defender script componennt. -temp
+
+#Conditonal that creates new user on local computer as long as the user inputs 1 and when the user inputs 0 the script moves on.
+Write-Output 'New User? yes=1, no=0 '
+$i = Read-Host
+
+while ($i -eq 1) {
+    Write-Output 'UserName:'
+    $UserName = Read-Host
+    Write-Output 'Password:'
+    $Password = Read-Host -AsSecureString
+    Write-Output 'Full Name:'
+    $FullName = Read-Host
+    Write-Output 'Group: (seperate with , then a space for mulitple groups)'
+    $Group = Read-Host
+    
+    New-LocalUser -Name $UserName -FullName $FullName -Password $Password -AccountNeverExpires -UserMayNotChangePassword
+    Add-LocalGroupMember -Group "$Group" -Member $UserName 
+    
+    Write-Output 'New User? yes=1, no=0 '
+    $i = Read-Host
+}
+
+#Conditonal that removes a user on local computer as long as user inputs 1. When the user inputs 0 the script moves on. 
+Write-Output 'Remove User? Yes=1, No=0'
+$i = Read-Host
+
+while ($i -eq 1) {
+    Write-Output 'What users would you like to remove?'
+    $User = Read-Host
+    Remove-LocalUser -Name $User
+
+    Write-Output 'Remove User? Yes=1, No=0'
+$i = Read-Host
+}
