@@ -41,7 +41,7 @@ Get-ChildItem -Path C:\users\*.docx  -Recurse -Force -Depth 2 > c:\Users\CyberPa
 Get-ChildItem -Path C:\users\*.pdf  -Recurse -Force -Depth 2 > c:\Users\CyberPatriotCompetitionFile\pdfOutPut -ErrorAction SilentlyContinue
 
 ###Saves the local security policy configuration file to competition folder:
-Get-Content $DriveLetter\LocalPassword\IntialConfig.cfg
+Get-Content LocalPassword\IntialConfig.cfg
 ###Updates the local security policy:
 secedit /configure /db c:\windows\security\local.sdb /cfg "IntialConfig.cfg" /areas SECURITYPOLICY
 
