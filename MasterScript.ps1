@@ -1,3 +1,6 @@
+Write-Output 'What is the drive letter for the usb drive?'
+$DriveLetter = Read-Host
+
 #Creates folder to store all files created by script in one place
 New-item -itemType Directory -Path c:\Users\CyberPatriotCompetitionFile
 
@@ -38,9 +41,10 @@ Get-ChildItem -Path C:\users\*.docx  -Recurse -Force -Depth 2 > c:\Users\CyberPa
 Get-ChildItem -Path C:\users\*.pdf  -Recurse -Force -Depth 2 > c:\Users\CyberPatriotCompetitionFile\pdfOutPut -ErrorAction SilentlyContinue
 
 ###Saves the local security policy configuration file to competition folder:
+Get-Content $DriveLetter\LocalPassword\IntialConfig.cfg
 ###Copy-Item -Path
 ###Updates the local security policy:
-###secedit /configure /db c:\windows\security\local.sdb /cfg "IntialConfig.cfg" /areas SECURITYPOLICY
+secedit /configure /db c:\windows\security\local.sdb /cfg "IntialConfig.cfg" /areas SECURITYPOLICY
 
 #Shows active users on local computer
 Get-LocalUser | Where-Object -Property enabled
