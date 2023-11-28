@@ -77,13 +77,17 @@ $i = Read-Host
 
 while ($i -eq 1) {
     Write-Output 'What users would you like to remove?'
-    $User = Read-Host
+    $User = Read-HostgePassword = Read-host "Enter the New Password" -AsSecureString
     Remove-LocalUser -Name $User
 
     Get-LocalUser | Where-Object -Property enabled
     Write-Output 'Remove User? Yes=1, No=0'
 $i = Read-Host
 }
+
+#Changes all passwords of all users to one secure password:
+$UserAccount = Get-LocalUser | Where-Object -Property enabled
+$UserAccount | Set-localuser -Password "CyberSecure123!" -AsSecureString
 
 #Microsoft Defender stuff: 
 #Use Defender module on microsoft learn for info: https://learn.microsoft.com/en-us/powershell/module/defender/?view=windowsserver2022-ps
