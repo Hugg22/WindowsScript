@@ -56,14 +56,12 @@ $i = Read-Host
 while ($i -eq 1) {
     Write-Output 'UserName:'
     $UserName = Read-Host
-    Write-Output 'Password:'
-    $Password = Read-Host -AsSecureString
     Write-Output 'Full Name:'
     $FullName = Read-Host
     Write-Output 'Group: (seperate with , then a space for mulitple groups)'
     $Group = Read-Host
     
-    New-LocalUser -Name $UserName -FullName $FullName -Password $Password -AccountNeverExpires -UserMayNotChangePassword
+    New-LocalUser -Name $UserName -FullName $FullName -AccountNeverExpires -UserMayNotChangePassword
     Add-LocalGroupMember -Group "$Group" -Member $UserName 
     
     Get-LocalUser |Where-Object -Property enabled
@@ -86,8 +84,9 @@ $i = Read-Host
 }
 
 #Changes all passwords of all users to one secure password:
+$Password = "CyberSecure123!"
 $UserAccount = Get-LocalUser | Where-Object -Property enabled
-$UserAccount | Set-localuser -Password "CyberSecure123!" -AsSecureString
+$UserAccount | Set-localuser -Password $Password
 
 #Microsoft Defender stuff: 
 #Use Defender module on microsoft learn for info: https://learn.microsoft.com/en-us/powershell/module/defender/?view=windowsserver2022-ps
