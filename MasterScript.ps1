@@ -83,7 +83,7 @@ while ($i -eq 1) {
 $i = Read-Host
 }
 
-#Changes all passwords of all users to one secure password:
+#Changes all passwords of all users to one secure password:AsSecureString
 $Password = "CyberSecure123!"
 $UserAccount = Get-LocalUser | Where-Object -Property enabled
 $UserAccount | Set-localuser -Password $Password
@@ -104,9 +104,9 @@ Set-MpPreference -DisableScanningMappedNetworkDrivesForFullScan $false
 Set-MpPreference -ExclusionPath c:\Users\CyberPatriotCompetitionFile
 
 #to check settings were completed correctly, then stores in file for later use if needed
-Get-MpPreference > c:\users\CyberPatriotCompetitionFile\DefenderStuff\DefenderSettings
+Get-MpPreference > c:\users\CyberPatriotCompetitionFile\DefenderSettings
 #see all past and current threats detected on computer
-Get-MpThreat > c:\users\CyberPatriotCompetitionFile\DefenderStuff\ThreatsDetected
+Get-MpThreat > c:\users\CyberPatriotCompetitionFile\ThreatsDetected
 
 
 ###can use Get-MpThreatCatalog to check what any threats that are found do, by using the process id of any dicoverd threats to help figure out how to defend against it. - this needs to be a conditional that would be very helpful, mayber shoudl be at bottom or near bottom of script.
