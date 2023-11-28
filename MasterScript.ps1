@@ -66,6 +66,7 @@ while ($i -eq 1) {
     New-LocalUser -Name $UserName -FullName $FullName -Password $Password -AccountNeverExpires -UserMayNotChangePassword
     Add-LocalGroupMember -Group "$Group" -Member $UserName 
     
+    Get-LocalUser |Where-Object -Property enabled
     Write-Output 'New User? yes=1, no=0 '
     $i = Read-Host
 }
@@ -79,6 +80,7 @@ while ($i -eq 1) {
     $User = Read-Host
     Remove-LocalUser -Name $User
 
+    Get-LocalUser | Where-Object -Property enabled
     Write-Output 'Remove User? Yes=1, No=0'
 $i = Read-Host
 }
