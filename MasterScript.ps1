@@ -1,16 +1,19 @@
 #account that is being used should be user account so that all files can be saved to correct place.
 Write-output 'UserName:'
 $CompUser = Read-Host
+Write-output 'drive letter of usb'
+$DriveLetter = Read-Host
 
 #Creates folder to store all files created by script in one place
 New-item -itemType Directory -Path c:\Users\CyberPatriotCompetitionFile
 
 
-#Windows FireWall Stuff:
+#Region Windows FireWall Stuff:
 #sets Firewall to active
 Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
 
 #Editing firewall rules
+Write-Warning 'editing firewall'
 Set-NetFirewallProfile -DefaultInboundAction Block -DefaultOutboundAction Allow -NotifyOnListen True -AllowUnicastResponseToMulticast True -LogFileName %SystemRoot%\System32\LogFiles\Firewall\pfirewall.log
 netsh advfirewall firewall set rule group="Network Discovery" new enable=No
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=No
@@ -45,6 +48,7 @@ New-NetFirewallRule -DisplayName "Block Port 5000" -Direction Inbound -LocalPort
 New-NetFirewallRule -DisplayName "Block Port 5432" -Direction inbound -LocalPort 5432 -Protocol TCP -Action Block
 New-NetFirewallRule -DisplayName "Block Port 6379" -Direction Inbound -LocalPort 6379 -Protocol TCP -Action Block
 New-NetFirewallRule -DisplayName "Block Port 27017,27018" -Direction Inbound -LocalPort 27017,27018 -Protocol TCP -Action Block
+#EndRegion
 
 <#Finds files created by user and puts them into a file located in the Users c drive
 Get-ChildItem -Path C:\users\$CompUser*.txt -Recurse -Force -Depth 2 > c:\Users\$CompUser\CyberPatriotCompetitionFile\txtOutPut -ErrorAction SilentlyContinue
@@ -71,17 +75,14 @@ if ($1 -eq 1){
 
 #searches for proccess that are using lots of system memory so user can see if they should be on the computer
 Write-Warning "investigating processes"
-Get-Process | Where-Object {$_.WorkingSet -gt 20000000} > C:\Users\$CompUser\Desktop\competition\interestingprocess.txt
+Get-Process | Where-Object {$_.WorkingSet -gt 20000000} > C:\Users\$CompUser\Desktop\CyberPatriotCompetitionFile\interestingprocess.txt
 
-###Saves the local security policy configuration file to competition folder:
-Get-Content LocalPassword\IntialConfig.cfg
-###Updates the local security policy:
-secedit /configure /db c:\windows\security\local.sdb /cfg "IntialConfig.cfg" /areas SECURITYPOLICY
+#Updates the password policy configuration file:
+Start-Process -FilePath secedit -ArgumentList "/configure", "/db", "c:\windows\security\local.sdb", "/cfg", "$(Get-Content -Path $DriveLetter\LocalPassword\IntialConfig.cfg)", "/areas", "SECURITYPOLICY" -Wait
 
+#Region Creating groups and local users
 #Shows active users on local computer
 Get-LocalUser | Where-Object -Property enabled
-
-#need to create microsoft defender script componennt. -temp
 
 #creates any groups that are required by the compettion:
 Write-Output 'Want to add a group? yes=1, no=0'
@@ -130,8 +131,9 @@ $i = Read-Host
 $Password = "CyberSecure123!"
 $UserAccount = Get-LocalUser
 $UserAccount | Set-localuser -Password $Password
+#EndRegion 
 
-#Microsoft Defender stuff: 
+#Region Microsoft Defender stuff: 
 #Use Defender module on microsoft learn for info: https://learn.microsoft.com/en-us/powershell/module/defender/?view=windowsserver2022-ps
 #need to test on windows vm
 #should make it to where all solutions are exported to file
@@ -161,3 +163,4 @@ Update-MpSignature
 Start-MpScan -ScanType QuickScan
 #Removes detected active threats from local computer:
 Remove-MpThreat
+#EndRegion
