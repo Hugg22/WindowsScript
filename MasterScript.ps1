@@ -59,7 +59,7 @@ Get-ChildItem -Path C:\users\*.docx  -Recurse -Force -Depth 2 > c:\Users\$CompUs
 Get-ChildItem -Path C:\users\*.pdf  -Recurse -Force -Depth 2 > c:\Users\$CompUser\CyberPatriotCompetitionFile\pdfOutPut -ErrorAction SilentlyContinue#>
 
 #find files created by user and puts them in a file located and then removes those files.
-$Files = Get-ChildItem -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1> C:\Users\$CompUser\Desktop\asdf\userfiles.txt
+$Files = Get-ChildItem -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 > C:\Users\$CompUser\Desktop\CyberPatriotCompetitionFile\userfiles.txt
 Write-Warning 'listing all located files in user directory'
 Write-output $Files
 Write-output 'Would you like to remove all of these files^: if yes=1, No=0'
