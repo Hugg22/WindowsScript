@@ -1,11 +1,12 @@
 #account that is being used should be user account so that all files can be saved to correct place.
 Write-output 'UserName:'
 $CompUser = Read-Host
-Write-output 'drive letter of usb'
-$DriveLetter = Read-Host
+#Write-output 'drive letter of usb'
+#$DriveLetter = Read-Host
 
 #Creates folder to store all files created by script in one place
 New-item -itemType Directory -Path c:\Users\CyberPatriotCompetitionFile
+New-item -itemType File -Path C:\Users\Desktop\CyberPatriotCompetitionFile\interestingprocess.txt
 
 
 #Region Windows FireWall Stuff:
@@ -29,25 +30,25 @@ netsh advfirewall firewall set rule name="Telnet Server" new enable=no
 netsh advfirewall firewall set rule name="netcat" new enable=no
 
 #Blocking high risk ports
-New-NetFirewallRule -DisplayName "Block Port 23" -Direction Inbound -LocalPort 23 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 20" -Direction Inbound -LocalPort 20 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 21" -Direction Inbound -LocalPort 21 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 22" -Direction Inbound -LocalPort 22 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 69" -Direction Inbound -LocalPort 69 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 3389" -Direction Inbound -LocalPort 3389 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 5900,5901,5902" -Direction Inbound -LocalPort 5900,5901,5902 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 5112,513,514" -Direction Inbound -LocalPort 512,513,514 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 873" -Direction Inbound -LocalPort 873 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 25" -Direction Inbound -LocalPort 25 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 110" -Direction Inbound -LocalPort 110 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 143" -Direction Inbound -LocalPort 143 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 1433" -Direction Inbound -LocalPort 1433 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 1521" -Direction Inbound -LocalPort 1521 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 3306" -Direction Inbound -LocalPort 3306 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 5000" -Direction Inbound -LocalPort 5000 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 5432" -Direction inbound -LocalPort 5432 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 6379" -Direction Inbound -LocalPort 6379 -Protocol TCP -Action Block
-New-NetFirewallRule -DisplayName "Block Port 27017,27018" -Direction Inbound -LocalPort 27017,27018 -Protocol TCP -Action Block
+New-NetFirewallRule -DisplayName "Block Port 23" -Direction Inbound -LocalPort 23 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 20" -Direction Inbound -LocalPort 20 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 21" -Direction Inbound -LocalPort 21 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 22" -Direction Inbound -LocalPort 22 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 69" -Direction Inbound -LocalPort 69 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 3389" -Direction Inbound -LocalPort 3389 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 5900,5901,5902" -Direction Inbound -LocalPort 5900,5901,5902 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 5112,513,514" -Direction Inbound -LocalPort 512,513,514 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 873" -Direction Inbound -LocalPort 873 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 25" -Direction Inbound -LocalPort 25 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 110" -Direction Inbound -LocalPort 110 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 143" -Direction Inbound -LocalPort 143 -Protocol TCP -Action Block -AsJob
+New-NetFirewallRule -DisplayName "Block Port 1433" -Direction Inbound -LocalPort 1433 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 1521" -Direction Inbound -LocalPort 1521 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 3306" -Direction Inbound -LocalPort 3306 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 5000" -Direction Inbound -LocalPort 5000 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 5432" -Direction inbound -LocalPort 5432 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 6379" -Direction Inbound -LocalPort 6379 -Protocol TCP -Action Block -Asjob
+New-NetFirewallRule -DisplayName "Block Port 27017,27018" -Direction Inbound -LocalPort 27017,27018 -Protocol TCP -Action Block -Asjob
 #EndRegion
 
 <#Finds files created by user and puts them into a file located in the Users c drive
@@ -63,7 +64,9 @@ Get-ChildItem -Path C:\users\*.docx  -Recurse -Force -Depth 2 > c:\Users\$CompUs
 Get-ChildItem -Path C:\users\*.pdf  -Recurse -Force -Depth 2 > c:\Users\$CompUser\CyberPatriotCompetitionFile\pdfOutPut -ErrorAction SilentlyContinue#>
 
 #find files created by user and puts them in a file located and then removes those files.
-$Files = Get-ChildItem -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 > C:\Users\$CompUser\Desktop\CyberPatriotCompetitionFile\userfiles.txt
+Write-Warning 'finding files: putting into file:'
+Get-ChildItem -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 > C:\Users\Desktop\CyberPatriotCompetitionFile
+$Files = Get-ChildItem -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 
 Write-Warning 'listing all located files in user directory'
 Write-output $Files
 Write-output 'Would you like to remove all of these files^: if yes=1, No=0'
@@ -75,10 +78,11 @@ if ($1 -eq 1){
 
 #searches for proccess that are using lots of system memory so user can see if they should be on the computer
 Write-Warning "investigating processes"
-Get-Process | Where-Object {$_.WorkingSet -gt 20000000} > C:\Users\$CompUser\Desktop\CyberPatriotCompetitionFile\interestingprocess.txt
+Get-Process | Where-Object {$_.WorkingSet -gt 20000000} > C:\Users\Desktop\CyberPatriotCompetitionFile\interestingprocess.txt
 
 #Updates the password policy configuration file:
-Start-Process -FilePath secedit -ArgumentList "/configure", "/db", "c:\windows\security\local.sdb", "/cfg", "$(Get-Content -Path $DriveLetter\LocalPassword\IntialConfig.cfg)", "/areas", "SECURITYPOLICY" -Wait
+Write-Warning 'setting password policy'
+Start-Process -FilePath secedit -ArgumentList "/configure", "/db", "c:\windows\security\local.sdb", "/cfg", "$(Get-Content -Path LocalPassword\IntialConfig.cfg)", "/areas", "SECURITYPOLICY" -Wait
 
 #Region Creating groups and local users
 #Shows active users on local computer
@@ -91,6 +95,8 @@ while ($i -eq 1){
     Write-Output 'Name of group'
     $GroupName = Read-Host
     New-LocalGroup -Name $GroupName
+    Write-Output 'Want to add a group? yes=1, no=0'
+    $i = Read-Host
 }
 
 #Conditonal that creates new user on local computer as long as the user inputs 1 and when the user inputs 0 the script moves on.
@@ -107,6 +113,7 @@ while ($i -eq 1) {
     
     New-LocalUser -Name $UserName -FullName $FullName -AccountNeverExpires -UserMayNotChangePassword
     Add-LocalGroupMember -Group "$Group" -Member $UserName 
+    Add-LocalGroupMember -Group "Users" -Member $UserName 
     
     Get-LocalUser |Where-Object -Property enabled
     Write-Output 'New User? yes=1, no=0 '
@@ -119,7 +126,7 @@ $i = Read-Host
 
 while ($i -eq 1) {
     Write-Output 'What users would you like to remove?'
-    $User = Read-HostgePassword = Read-host "Enter the New Password" -AsSecureString
+    $User = Read-Host
     Remove-LocalUser -Name $User
 
     Get-LocalUser | Where-Object -Property enabled
@@ -128,8 +135,9 @@ $i = Read-Host
 }
 
 #Changes all passwords of all users to one secure password:AsSecureString
-$Password = "CyberSecure123!"
-$UserAccount = Get-LocalUser
+Write-Output 'password for all users is CyberSecure123!    copy this password into the next field:'
+$Password = Read-Host -AsSecureString
+$UserAccount = Get-LocalUser |Where-Object -Property enabled
 $UserAccount | Set-localuser -Password $Password
 #EndRegion 
 
