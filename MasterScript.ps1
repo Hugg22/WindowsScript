@@ -1,6 +1,6 @@
 #account that is being used should be user account so that all files can be saved to correct place.
 Write-output 'UserName:'
-$CompUser = Read-Host
+#$CompUser = Read-Host
 #Write-output 'drive letter of usb'
 #$DriveLetter = Read-Host
 
@@ -78,7 +78,7 @@ if ($1 -eq 1){
 
 #searches for proccess that are using lots of system memory so user can see if they should be on the computer
 Write-Warning "investigating processes"
-Get-Process | Where-Object {$_.WorkingSet -gt 20000000} > C:\Users\Desktop\CyberPatriotCompetitionFile\interestingprocess.txt
+Get-Process | Where-Object {$_.WorkingSet -gt 20000000} > C:\Users\Desktop\CyberPatriotCompetitionFile\interestingprocess
 
 #Updates the password policy configuration file:
 Write-Warning 'setting password policy'
