@@ -107,10 +107,12 @@ while($i -eq 1){
     Get-LocalGroup
     Write-Output 'Name of group to add users to'
     $group = Read-Host
-    Write-output'users to add to that group seperate with ,'
+    $userInputArray = @()
+    Write-output 'users to add to that group seperate with ,'
     $UsersToGroup = Read-Host
+    $userInputArray += $UsersToGroup
 
-    Add-LocalGroupMember -Group $group -Member $UsersToGroup
+    Add-LocalGroupMember -Group $group -Member $userInputArray
     Write-Output 'Want to add users to a group? yes=1, no=0'
     $i = Read-Host
 }
