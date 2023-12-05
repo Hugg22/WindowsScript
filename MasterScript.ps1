@@ -73,7 +73,8 @@ Write-output 'Would you like to remove all of these files^: if yes=1, No=0'
 $1 = Read-Host
 if ($1 -eq 1){
     Write-Warning 'Removing all found files'
-    Remove-Item -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 
+    #Remove-Item -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 
+    Remove-Item $Files
 }
 
 #searches for proccess that are using lots of system memory so user can see if they should be on the computer
@@ -99,6 +100,20 @@ while ($i -eq 1){
     $i = Read-Host
 }
 
+#Conditional that adds users to a specified group.
+Write-Output 'Want to add users to a group? yes=1, no=0'
+$i = Read-Host
+while($i -eq 1){
+    Get-LocalGroup
+    Write-Output 'Name of group to add users to'
+    $group = Read-Host
+    Write-output'users to add to that group seperate with ,'
+    $UsersToGroup = Read-Host
+
+    Add-LocalGroupMember -Group $group -Member $UsersToGroup
+    Write-Output 'Want to add users to a group? yes=1, no=0'
+    $i = Read-Host
+}
 #Conditonal that creates new user on local computer as long as the user inputs 1 and when the user inputs 0 the script moves on.
 Write-Output 'New User? yes=1, no=0 '
 $i = Read-Host
