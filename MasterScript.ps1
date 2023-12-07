@@ -94,7 +94,7 @@ Start-Process -FilePath secedit -ArgumentList "/configure", "/db", "c:\windows\s
 Get-LocalUser | Where-Object -Property enabled
 
 #creates any groups that are required by the compettion:
-Get-LocalGroup |Format-Table -AutoSize
+Get-LocalGroup |Format-Table -AutoSize | Out-Host
 Write-Output 'Want to add a group? yes=1, no=0'
 $i = Read-Host
 while ($i -eq 1){
@@ -106,16 +106,16 @@ while ($i -eq 1){
 }
 
 #Conditional that adds users to a specified group.
-Get-LocalGroup |Format-Table -AutoSize
+Get-LocalGroup |Format-Table -AutoSize | Out-Host
 Write-Output 'Want to add users to a group? yes=1, no=0'
 $i = Read-Host
 while($i -eq 1){
     Write-Output 'Name of group to add users to'
     $group = Read-Host
-    Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize
+    Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize | Out-Host
     Write-output 'users to add to that group seperate with ,'
     $UsersToGroup = Read-Host
-    $userInputArray = @($UsersToGroup)
+    $userInputArray = $UsersToGroup -split ','
 
     Add-LocalGroupMember -Group $group -Member $userInputArray
     Write-Output 'Want to add users to a group? yes=1, no=0'
@@ -137,13 +137,13 @@ while ($i -eq 1) {
     Add-LocalGroupMember -Group "$Group" -Member $UserName 
     Add-LocalGroupMember -Group "Users" -Member $UserName 
     
-    Get-LocalUser |Where-Object -Property enabled |Format-Table -AutoSize
+    Get-LocalUser |Where-Object -Property enabled |Format-Table -AutoSize | Out-Host
     Write-Output 'New User? yes=1, no=0 '
     $i = Read-Host
 }
 
 #Conditonal that removes a user on local computer as long as user inputs 1. When the user inputs 0 the script moves on. 
-Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize
+Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize | Out-Host
 Write-Output 'Remove User? Yes=1, No=0'
 $i = Read-Host
 
