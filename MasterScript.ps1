@@ -94,10 +94,10 @@ Start-Process -FilePath secedit -ArgumentList "/configure", "/db", "c:\windows\s
 Get-LocalUser | Where-Object -Property enabled
 
 #creates any groups that are required by the compettion:
+Get-LocalGroup |Format-Table -AutoSize
 Write-Output 'Want to add a group? yes=1, no=0'
 $i = Read-Host
 while ($i -eq 1){
-    Get-LocalGroup
     Write-Output 'Name of group'
     $GroupName = Read-Host
     New-LocalGroup -Name $GroupName
@@ -106,10 +106,10 @@ while ($i -eq 1){
 }
 
 #Conditional that adds users to a specified group.
+Get-LocalGroup |Format-Table -AutoSize
 Write-Output 'Want to add users to a group? yes=1, no=0'
 $i = Read-Host
 while($i -eq 1){
-    Get-LocalGroup |Format-Table -AutoSize
     Write-Output 'Name of group to add users to'
     $group = Read-Host
     Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize
@@ -143,11 +143,11 @@ while ($i -eq 1) {
 }
 
 #Conditonal that removes a user on local computer as long as user inputs 1. When the user inputs 0 the script moves on. 
+Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize
 Write-Output 'Remove User? Yes=1, No=0'
 $i = Read-Host
 
 while ($i -eq 1) {
-    Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize
     Write-Output 'What users would you like to remove?'
     $User = Read-Host
     Remove-LocalUser -Name $User
