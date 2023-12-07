@@ -109,10 +109,10 @@ while ($i -eq 1){
 Write-Output 'Want to add users to a group? yes=1, no=0'
 $i = Read-Host
 while($i -eq 1){
-    Get-LocalGroup
+    Get-LocalGroup |Format-Table -AutoSize
     Write-Output 'Name of group to add users to'
     $group = Read-Host
-    Get-LocalUser | Where-Object -Property enabled
+    Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize
     Write-output 'users to add to that group seperate with ,'
     $UsersToGroup = Read-Host
     $userInputArray = @($UsersToGroup)
@@ -137,7 +137,7 @@ while ($i -eq 1) {
     Add-LocalGroupMember -Group "$Group" -Member $UserName 
     Add-LocalGroupMember -Group "Users" -Member $UserName 
     
-    Get-LocalUser |Where-Object -Property enabled
+    Get-LocalUser |Where-Object -Property enabled |Format-Table -AutoSize
     Write-Output 'New User? yes=1, no=0 '
     $i = Read-Host
 }
@@ -147,11 +147,11 @@ Write-Output 'Remove User? Yes=1, No=0'
 $i = Read-Host
 
 while ($i -eq 1) {
-    Get-LocalUser | Where-Object -Property enabled
+    Get-LocalUser | Where-Object -Property enabled |Format-Table -AutoSize
     Write-Output 'What users would you like to remove?'
     $User = Read-Host
     Remove-LocalUser -Name $User
-    
+
     Write-Output 'Remove User? Yes=1, No=0'
 $i = Read-Host
 }
