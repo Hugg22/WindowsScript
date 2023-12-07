@@ -1,5 +1,5 @@
 #account that is being used should be user account so that all files can be saved to correct place.
-Write-output 'UserName:'
+#Write-output 'UserName:'
 #$CompUser = Read-Host
 #Write-output 'drive letter of usb'
 #$DriveLetter = Read-Host
@@ -66,6 +66,8 @@ Get-ChildItem -Path C:\users\*.pdf  -Recurse -Force -Depth 2 > c:\Users\$CompUse
 #find files created by user and puts them in a file located and then removes those files.
 Write-Warning 'finding files: putting into file:'
 Get-ChildItem -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 > C:\Users\Desktop\CyberPatriotCompetitionFile
+#Region Deletion of Files(Not Using Currently, can make better later)
+<#
 $Files = Get-ChildItem -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 
 Write-Warning 'listing all located files in user directory'
 Write-output $Files
@@ -76,6 +78,8 @@ if ($1 -eq 1){
     #Remove-Item -Path C:\Users\* -Include *.jpg,*.png,*.aac,*.ac3,*.avi,*.aiff,*.bat,*.bmp,*.exe,*.flac,*.gif,*.jpeg,*.mov,*.m3u,*.m4p,*.mp2,*.mp3,*.mp4,*.mpeg4,*.midi,*.msi,*.ogg,*.png,*.txt,*.sh,*.wav,*.wma,*.vqf,*.pcap,*.zip,*.pdf,*.json -Recurse -Depth 1 
     Remove-Item $Files
 }
+#>
+#EndRegion
 
 #searches for proccess that are using lots of system memory so user can see if they should be on the computer
 Write-Warning "investigating processes"
@@ -107,10 +111,9 @@ while($i -eq 1){
     Get-LocalGroup
     Write-Output 'Name of group to add users to'
     $group = Read-Host
-    $userInputArray = @()
     Write-output 'users to add to that group seperate with ,'
     $UsersToGroup = Read-Host
-    $userInputArray += $UsersToGroup
+    $userInputArray = @($UsersToGroup)
 
     Add-LocalGroupMember -Group $group -Member $userInputArray
     Write-Output 'Want to add users to a group? yes=1, no=0'
