@@ -5,7 +5,7 @@
 #$DriveLetter = Read-Host
 
 #Creates folder to store all files created by script in one place
-New-item -itemType Directory -Path c:\Users\CyberPatriotCompetitionFile
+New-item -itemType Directory -Path c:\Users\Desktop\CyberPatriotCompetitionFile
 New-item -itemType File -Path C:\Users\Desktop\CyberPatriotCompetitionFile\interestingprocess.txt
 
 
@@ -83,11 +83,25 @@ if ($1 -eq 1){
 
 #searches for proccess that are using lots of system memory so user can see if they should be on the computer
 Write-Warning "investigating processes"
-Get-Process | Where-Object {$_.WorkingSet -gt 20000000} > C:\Users\Desktop\CyberPatriotCompetitionFile\interestingprocess
+Get-Process | Where-Object {$_.WorkingSet -gt 20000000} > C:\Users\Desktop\CyberPatriotCompetitionFile\interestingprocess.txt
 
-#Updates the password policy configuration file:
-Write-Warning 'setting password policy'
-Start-Process -FilePath secedit -ArgumentList "/configure", "/db", "c:\windows\security\local.sdb", "/cfg", "$(Get-Content -Path LocalPassword\IntialConfig.cfg)", "/areas", "SECURITYPOLICY" -Wait
+#Region editing localsecurity policys:
+# Specify the paths
+$configFilePath = "LocalPassword\IntialConfig.cfg"
+$dbPath = "c:\windows\security\local.sdb"
+# Read content from the configuration file
+$configContent = Get-Content -Path $configFilePath -Raw
+
+# Use secedit to apply the configuration
+$seceditCommand = "secedit /configure /db ""$dbPath"" /cfg ""$configFilePath"" /areas SECURITYPOLICY"
+    
+# Start the secedit process and capture the output
+Start-Process -FilePath "secedit" -ArgumentList @("/configure", "/db", $dbPath, "/cfg", $configFilePath, "/areas", "SECURITYPOLICY") 
+
+Write-Output "Security settings applied successfully."
+
+
+#EndRegion
 
 #Region Creating groups and local users
 #Shows active users on local computer
